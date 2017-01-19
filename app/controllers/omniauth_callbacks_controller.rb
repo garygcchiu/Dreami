@@ -1,5 +1,7 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
+  #implementing Twitter Sign-In API using OmniAuth 
+
   def twitter
     user = User.from_omniauth(request.env["omniauth.auth"])
     if user.persisted?
