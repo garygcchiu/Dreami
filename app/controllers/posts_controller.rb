@@ -1,22 +1,24 @@
 class PostsController < ApplicationController
 
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
     # index will be a list of posts
-    @posts = Post.all
+    @posts = current_user.posts.all.order("id DESC")
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = current_user.posts.find(params[:id])
   end
 
   def new
     # form to add post
-    @post = Post.new
+    @post = current_user.posts.build
   end
 
   def create
     # check if submitted to create: render plain: params[:post].inspect
-    @post = Post.new(post_params)
+    @post = current_user.posts.build(post_params)
     if (@post.save)
       redirect_to @post
     else
@@ -25,11 +27,11 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
+    @post = current_user.posts.find(params[:id])
   end
 
   def update
-    @post = Post.find(params[:id])
+    @post = current_user.posts.find(params[:id])
     if (@post.update(post_params))
       redirect_to @post
     else

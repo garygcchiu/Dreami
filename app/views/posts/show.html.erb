@@ -9,3 +9,33 @@
                 :class => 'btn btn-danger' %>
 
 <%= link_to "Back", home_path, :class => 'btn btn-primary' %>
+
+<hr>
+
+<hr>
+
+<h3> Add a Comment </h3>
+<%= form_for ([@post, @post.comments.build]) do |f| %>
+
+  <% if @post.errors.any? %>
+    <% @post.errors.full_messages.each do |msg| %>
+      <div class="alert alert-danger">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <p>
+    <%= f.label :username %> <br>
+    <%= f.text_field(:username, {:class => 'form-control'}) %>
+  </p>
+
+  <p>
+    <%= f.label :body %> <br>
+    <%= f.text_area(:body, {:class => 'form-control'}) %>
+  </p>
+
+  <p>
+    <%= f.submit({:class => 'btn btn-default'}) %>
+  </p>
+<% end %>
